@@ -12,13 +12,14 @@ def main():
     st.sidebar.image('./img/fsa.png', use_column_width=True)
     st.sidebar.title("FSA - Solar Dash")
     st.sidebar.write("Dashboard desenvolvido para exibir quantidade necessária de painés solares na FSA + potencial energético da região.")
-        
+    
+    
     # Main elements
     st.title("Irradiação Solar Média - Grande ABC")
-    with open('mapa_interativo.html', 'r', encoding='utf-8') as f:
+    with open('irradiacao_media_abc.html', 'r', encoding='utf-8') as f:
         html_content = f.read()
         
-    st.components.v1.html(html_content, width=700, height=500)
+    st.components.v1.html(html_content, width=600, height=450)
     
 if __name__ == "__main__":
     main()
