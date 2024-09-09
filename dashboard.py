@@ -19,7 +19,7 @@ def main():
     with open('irradiacao_media_abc.html', 'r', encoding='utf-8') as f:
         html_content = f.read()
         
-    st.components.v1.html(html_content, width=600, height=450)
+    st.components.v1.html(html_content, width=1200, height=650)
     
 if __name__ == "__main__":
     main()
