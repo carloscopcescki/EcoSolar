@@ -1,4 +1,5 @@
 import streamlit as st
+from commands import *
 
 def main():
     '''Create dashboard page'''
@@ -7,6 +8,7 @@ def main():
         page_icon=':sunrise:',
         layout='wide'
     )
+    
     # Sidebar elements
     st.sidebar.empty()
     st.sidebar.image('./img/fsa.png', use_column_width=True)
@@ -33,4 +35,5 @@ def main():
         st.components.v1.html(html_content, width=700, height=600)
     
 if __name__ == "__main__":
+    '''Start dashboard page'''
     main()
