@@ -35,5 +35,4 @@ def main():
         st.components.v1.html(html_content, width=700, height=600)
     
 if __name__ == "__main__":
-    '''Start dashboard page'''
     main()
