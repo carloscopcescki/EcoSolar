@@ -3,7 +3,7 @@ import streamlit as st
 def main():
     '''Create dashboard page'''
     st.set_page_config(
-        page_title='Solar Panel',
+        page_title='Solar Dash',
         page_icon=':sunrise:',
         layout='wide'
     )
@@ -14,17 +14,23 @@ def main():
     st.sidebar.write("Dashboard desenvolvido para exibir quantidade necessária de painés solares na FSA + potencial energético da região.")
     st.sidebar.divider()
 
-    panel_potencial = st.sidebar.text_input("Potência do painel solar (em kW")
-    solar_irradiation = st.sidebar.text_input("Irradiação solar (em kWh/m².dia)")
-    system_efficiency = st.sidebar.text_input("Eficiência do sistema")
+    st.sidebar.title("Inserir dados")
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (em kW)", min_value=0)
+    solar_irradiation = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0)
+    system_efficiency = st.sidebar.number_input("Eficiência do sistema (%)", min_value=0, max_value=100, step=5)
     irradiation_days = st.sidebar.number_input("Número de dias", min_value=1, max_value=365, step=1)
 
     # Main elements
-    st.title("Irradiação Solar Média - Grande ABC")
-    with open('mapa_interativo.html', 'r', encoding='utf-8') as f:
-        html_content = f.read()
-        
-    st.components.v1.html(html_content, width=750, height=600)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.title("Dados")
+    with col2:
+        st.title("Mapa")
+        with open('irradiacao_media_abc.html', 'r', encoding='utf-8') as f:
+            html_content = f.read()
+            
+        st.components.v1.html(html_content, width=700, height=600)
     
 if __name__ == "__main__":
     main()
