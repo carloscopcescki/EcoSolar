@@ -1,4 +1,6 @@
-class SolarCalculate:
-    """Calculate solar energy and potential"""
-    def __init__(self) -> None:
+from geopy.geocoders import Nominatim
+from pprint import pprint
+
+class Geolocation:
+    def __init__(self):
         pass

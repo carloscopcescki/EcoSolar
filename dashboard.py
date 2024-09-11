@@ -15,7 +15,9 @@ def main():
     st.sidebar.write("Dashboard desenvolvido para auxiliar na pesquisa e estudo acerca do potencial energético solar da FSA e a viabilidade de implementação dos painéis solares.")
     st.sidebar.divider()
 
+    # Input values
     st.sidebar.title("Inserir dados")
+    location = st.sidebar.text_input("Buscar localização")
     panel_potencial = st.sidebar.number_input("Potência do painel solar (em kW)", min_value=0)
     solar_irradiation = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0)
     system_efficiency = st.sidebar.number_input("Eficiência do sistema (%)", min_value=0, max_value=100, step=5)
