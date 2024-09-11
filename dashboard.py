@@ -11,9 +11,8 @@ def main():
     
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', use_column_width=True)
     st.sidebar.title("FSA - Solar Dash")
-    st.sidebar.write("Dashboard desenvolvido para exibir quantidade necessária de painés solares na FSA + potencial energético da região.")
+    st.sidebar.write("Dashboard desenvolvido para auxiliar na pesquisa e estudo acerca do potencial energético solar da FSA e a viabilidade de implementação dos painéis solares.")
     st.sidebar.divider()
 
     st.sidebar.title("Inserir dados")
@@ -32,7 +31,7 @@ def main():
         with open('irradiacao_media_abc.html', 'r', encoding='utf-8') as f:
             html_content = f.read()
             
-        st.components.v1.html(html_content, width=700, height=600)
+        st.components.v1.html(html_content, width=500, height=450)
     
 if __name__ == "__main__":
     main()

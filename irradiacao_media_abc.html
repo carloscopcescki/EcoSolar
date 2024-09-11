@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_f0154508658622ba91cd04f3c1c2c7d5 {
+                #map_97fb3615afb9e9494e762b7b74b83e8e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,14 +39,14 @@
 <body>
     
     
-            <div class="folium-map" id="map_f0154508658622ba91cd04f3c1c2c7d5" ></div>
+            <div class="folium-map" id="map_97fb3615afb9e9494e762b7b74b83e8e" ></div>
         
 </body>
 <script>
     
     
-            var map_f0154508658622ba91cd04f3c1c2c7d5 = L.map(
-                "map_f0154508658622ba91cd04f3c1c2c7d5",
+            var map_97fb3615afb9e9494e762b7b74b83e8e = L.map(
+                "map_97fb3615afb9e9494e762b7b74b83e8e",
                 {
                     center: [-23.66128, -46.554371],
                     crs: L.CRS.EPSG3857,
@@ -60,64 +60,37 @@
 
         
     
-            var tile_layer_eda5e281de32209e8d7358e382181f33 = L.tileLayer(
+            var tile_layer_2554b86b25bf88dcc7dc19bf32eab930 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             );
         
     
-            tile_layer_eda5e281de32209e8d7358e382181f33.addTo(map_f0154508658622ba91cd04f3c1c2c7d5);
+            tile_layer_2554b86b25bf88dcc7dc19bf32eab930.addTo(map_97fb3615afb9e9494e762b7b74b83e8e);
         
     
-            var tile_layer_1795320bee001d9a48dc84278af7174c = L.tileLayer(
+            var tile_layer_865950e91d092b46d301a19ea9fc37c4 = L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 {"attribution": "Esri", "detectRetina": false, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             );
         
     
-            tile_layer_1795320bee001d9a48dc84278af7174c.addTo(map_f0154508658622ba91cd04f3c1c2c7d5);
+            tile_layer_865950e91d092b46d301a19ea9fc37c4.addTo(map_97fb3615afb9e9494e762b7b74b83e8e);
         
     
-            var marker_c1cba93fd3cf3c0c1857f04ba81fc959 = L.marker(
-                [-23.66128, -46.554371],
-                {}
-            ).addTo(map_f0154508658622ba91cd04f3c1c2c7d5);
-        
-    
-            var icon_119ed0ee0e52af9116402460c6838874 = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
-            );
-            marker_c1cba93fd3cf3c0c1857f04ba81fc959.setIcon(icon_119ed0ee0e52af9116402460c6838874);
-        
-    
-        var popup_0998f079dba09575bbb97e5dc500dc2e = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_8fa2f88d6a540f7ba44a679b8e3068be = $(`<div id="html_8fa2f88d6a540f7ba44a679b8e3068be" style="width: 100.0%; height: 100.0%;">Fundação Santo André</div>`)[0];
-                popup_0998f079dba09575bbb97e5dc500dc2e.setContent(html_8fa2f88d6a540f7ba44a679b8e3068be);
-            
-        
-
-        marker_c1cba93fd3cf3c0c1857f04ba81fc959.bindPopup(popup_0998f079dba09575bbb97e5dc500dc2e)
-        ;
-
-        
-    
-    
-            var layer_control_83272bcadfd91b1d04b6944dd364220d_layers = {
+            var layer_control_d92ff0b7230b3e615b0af416688127c3_layers = {
                 base_layers : {
-                    "openstreetmap" : tile_layer_eda5e281de32209e8d7358e382181f33,
-                    "Esri Satellite" : tile_layer_1795320bee001d9a48dc84278af7174c,
+                    "openstreetmap" : tile_layer_2554b86b25bf88dcc7dc19bf32eab930,
+                    "Esri Satellite" : tile_layer_865950e91d092b46d301a19ea9fc37c4,
                 },
                 overlays :  {
                 },
             };
-            let layer_control_83272bcadfd91b1d04b6944dd364220d = L.control.layers(
-                layer_control_83272bcadfd91b1d04b6944dd364220d_layers.base_layers,
-                layer_control_83272bcadfd91b1d04b6944dd364220d_layers.overlays,
+            let layer_control_d92ff0b7230b3e615b0af416688127c3 = L.control.layers(
+                layer_control_d92ff0b7230b3e615b0af416688127c3_layers.base_layers,
+                layer_control_d92ff0b7230b3e615b0af416688127c3_layers.overlays,
                 {"autoZIndex": true, "collapsed": true, "position": "topright"}
-            ).addTo(map_f0154508658622ba91cd04f3c1c2c7d5);
+            ).addTo(map_97fb3615afb9e9494e762b7b74b83e8e);
 
         
 </script>
