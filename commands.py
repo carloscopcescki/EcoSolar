@@ -32,7 +32,7 @@ class EnergyCalculate:
     def __init__(self):
         pass
 
-    def energyGenerate(self, qty_panel: float, panel_potential: float, irradiation: float, efficiency: float, days: int) -> float | int:
+    def generate(self, qty_panel: float, panel_potential: float, irradiation: float, efficiency: float, days: int) -> float | int:
         '''Calculate energy generated'''
         self.panel_potential = panel_potential
         self.irradiation = irradiation
@@ -48,7 +48,8 @@ class EnergyCalculate:
 
         return energy_rounded
 
-class SolarSystem:
+class System:
+    '''Calculate panel solar system'''
     def __init__ (self, panel: float, consumption: float, irradiation: float, efficiency: float, days: int) -> float | int:
         self.panel = panel
         self.consumption = consumption
