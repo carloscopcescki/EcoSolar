@@ -20,7 +20,7 @@ def main() -> None:
 
     # Input values
     st.sidebar.title("Inserir dados")
-    search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização")
+    search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="Fundação Santo André")
 
     with st.sidebar.expander("Energia gerada"):
         st.info("Calcular a quantidade de energia gerada por painel solar")
@@ -47,9 +47,9 @@ def main() -> None:
         st.title("Dados")
         if bt_calc:
             calculate = EnergyCalculate()
-            panel = System(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, day_panel)
+            panel = Panel()
             st.subheader(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, day_generate)}kWh")
-            st.subheader(f"Capacidade do sistema: {panel.systemCapacity()}kW")
+            st.subheader(f"Capacidade do sistema: {panel.systemCapacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, day_panel)}kW")
             st.subheader(f"Quantidade: {panel.quantity()} painéis solares")
 
     with col2:
