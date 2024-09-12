@@ -1,7 +1,7 @@
 import streamlit as st
 from commands import *
 
-def main():
+def main() -> None:
     '''Create dashboard page'''
     st.set_page_config(
         page_title='Solar Dash',
