@@ -1,5 +1,6 @@
 import streamlit as st
 from commands import *
+from api_key import API_KEY
 from geopy.geocoders import Nominatim
 from opencage.geocoder import OpenCageGeocode
 
@@ -10,8 +11,8 @@ def main() -> None:
         page_icon=':sunrise:',
         layout='wide'
     )
-    api_key = st.secrets["auth_key"]
-    geocoder = OpenCageGeocode(api_key)
+    
+    geocoder = OpenCageGeocode(API_KEY)
         
     # Sidebar elements
     st.sidebar.empty()
