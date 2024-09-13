@@ -1,6 +1,4 @@
 streamlit
 geopy
-geopy.geocoders
 folium
-lib2to3.pytree
 streamlit_folium
