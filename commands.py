@@ -18,12 +18,12 @@ class Map:
             tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             attr='Esri',
             name='Esri Satellite',
-            overlay=False,
-            control=True
+            control=True,
+            max_zoom=19
         ).add_to(m)
         
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=725)
+        st_data = st_folium(m, width=700, height=500)
         
         return st_data
     
@@ -32,7 +32,7 @@ class EnergyCalculate:
     def __init__(self) -> None:
         pass
 
-    def generate(self, qty_panel: float, panel_potential: float, irradiation: float, efficiency: float, days: float) -> float:
+    def generate(self, qty_panel: float, panel_potential: float, irradiation: float, efficiency: float, days: int) -> float | int:
         '''Calculate energy generated'''
         self.panel_potential = panel_potential
         self.irradiation = irradiation
@@ -53,7 +53,7 @@ class Panel:
     def __init__ (self) -> None:
         pass
         
-    def systemCapacity(self, panel: float, consumption: float, irradiation: float, efficiency: float, days: float) -> float:
+    def capacity(self, panel: float, consumption: float, irradiation: float, efficiency: float, days: int) -> float | int:
         '''Return solar panel system capacity'''
         self.panel = panel
         self.consumption = consumption
@@ -69,10 +69,10 @@ class Panel:
         
         return self.media_capacity
 
-    def quantity(self) -> float:
+    def quantity(self) -> int:
         '''Return solar panel quantity'''
         convert_sys = self.media_capacity * 1000
         qty = convert_sys / self.panel
-        qty_rounded = round(qty, 1)
+        qty_rounded = int(qty)
         
         return qty_rounded

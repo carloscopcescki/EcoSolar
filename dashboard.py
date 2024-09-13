@@ -1,6 +1,8 @@
 import streamlit as st
 from commands import *
+from api import API_KEY
 from geopy.geocoders import Nominatim
+from opencage.geocoder import OpenCageGeocode
 
 def main() -> None:
     '''Create dashboard page'''
@@ -10,7 +12,7 @@ def main() -> None:
         layout='wide'
     )
     
-    geolocator = Nominatim(user_agent="geoapiExercises", timeout=None)
+    geocoder = OpenCageGeocode(API_KEY)
         
     # Sidebar elements
     st.sidebar.empty()
@@ -38,28 +40,38 @@ def main() -> None:
         sys_efficiency_panel = st.number_input("Eficiência do sistema (%)", key='efficiency-panel', min_value=0, max_value=100, step=5, value=80)
         day_panel = st.number_input("Número de dias", key='days-panel', min_value=1, max_value=365, step=1, value=30)
     
-    bt_calc = st.sidebar.button("Calcular")
-
     # Main elements
+    st.title("Solar Dash")
+    st.divider()
     col1, col2 = st.columns(2)
     
     with col1:
-        st.title("Dados")
-        if bt_calc:
-            calculate = EnergyCalculate()
-            panel = Panel()
-            st.subheader(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, day_generate)}kWh")
-            st.subheader(f"Capacidade do sistema: {panel.systemCapacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, day_panel)}kW")
-            st.subheader(f"Quantidade: {panel.quantity()} painéis solares")
+        calculate = EnergyCalculate()
+        panel_sys = Panel()
+        
+        st.header("Dados")
+        
+        col1a, col1b = st.columns(2)
+        with col1a:
+            st.image('./img/tomada.jpg', width=200)
+            st.text(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
+        with col1b:
+            st.image('./img/system.jpg', width=200)
+            st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
+        st.image('./img/solar_panel.png', width=200)
+        st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
 
     with col2:
-        st.title("Mapa")
+        st.header("Mapa")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
-            local = geolocator.geocode(search_location)
-            location = Map(local.latitude, local.longitude)
-            location.map_generate()
+            result = geocoder.geocode(search_location)
+            if result:
+                location = result[0]['geometry']
+                lat, lon = location['lat'], location['lng']
+                map_location = Map(lat, lon)
+                map_location.map_generate()
 
 if __name__ == "__main__":
     main()
