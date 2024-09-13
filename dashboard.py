@@ -10,8 +10,8 @@ def main() -> None:
         page_icon=':sunrise:',
         layout='wide'
     )
-    
-    geocoder = OpenCageGeocode(st.secrets["auth_key"])
+    api_key = st.secrets["auth_key"]
+    geocoder = OpenCageGeocode(api_key)
         
     # Sidebar elements
     st.sidebar.empty()
