@@ -11,8 +11,7 @@ def main() -> None:
         layout='wide'
     )
     
-    api_key = st.secrets["auth_key"]
-    geocoder = OpenCageGeocode(api_key)
+    geocoder = OpenCageGeocode(st.secrets["auth_key"])
         
     # Sidebar elements
     st.sidebar.empty()
