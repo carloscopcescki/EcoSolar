@@ -1,6 +1,5 @@
 import streamlit as st
 from commands import *
-from api_key import API_KEY
 from geopy.geocoders import Nominatim
 from opencage.geocoder import OpenCageGeocode
 
@@ -12,7 +11,20 @@ def main() -> None:
         layout='wide'
     )
     
-    geocoder = OpenCageGeocode(API_KEY)
+    st.html(
+        '''
+        <style>
+        hr {
+            border-color: blue;
+            border-radius: 100px;
+        }
+        </style>
+        '''
+    )
+    
+    key = st.secrets['api_key']
+    
+    geocoder = OpenCageGeocode(key)
         
     # Sidebar elements
     st.sidebar.empty()
@@ -45,12 +57,13 @@ def main() -> None:
     st.divider()
     col1, col2 = st.columns(2)
     
+    col1.header('Dados')
+    col2.header('Mapa')
+    
     with col1:
         calculate = EnergyCalculate()
         panel_sys = Panel()
-        
-        st.header("Dados")
-        
+
         col1a, col1b = st.columns(2)
         with col1a:
             st.image('./img/tomada.jpg', width=200)
@@ -58,11 +71,13 @@ def main() -> None:
         with col1b:
             st.image('./img/system.jpg', width=200)
             st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
-        st.image('./img/solar_panel.png', width=200)
-        st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
+        
+        col2a, col2b = st.columns(2)
+        with col2a:
+            st.image('./img/solar_panel.png', width=200)
+            st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
 
     with col2:
-        st.header("Mapa")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
