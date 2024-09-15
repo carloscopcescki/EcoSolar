@@ -22,7 +22,7 @@ def main() -> None:
         '''
     )
     
-    key = st.secrets['api_key']
+    key = st.secrets['API_KEY']
     
     geocoder = OpenCageGeocode(key)
         
