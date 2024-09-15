@@ -22,8 +22,7 @@ def main() -> None:
         '''
     )
     
-    key = st.secrets['API_KEY']
-    
+    key = st.secrets["API_KEY"]
     geocoder = OpenCageGeocode(key)
         
     # Sidebar elements
