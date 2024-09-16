@@ -27,7 +27,7 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png')
+    st.sidebar.image('./img/fsa.png', width=150)
     st.sidebar.title("Solar Dash")
     st.sidebar.write("Dashboard desenvolvido para auxiliar na pesquisa e estudo acerca do potencial energético solar da FSA e a viabilidade de implementação dos painéis solares.")
 
@@ -65,15 +65,15 @@ def main() -> None:
 
         col1a, col1b = st.columns(2)
         with col1a:
-            st.image('./img/tomada.jpg', width=200)
+            st.image('./img/tomada.jpg', width=150)
             st.text(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
         with col1b:
-            st.image('./img/system.jpg', width=200)
+            st.image('./img/system.jpg', width=150)
             st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
         
         col2a, col2b = st.columns(2)
         with col2a:
-            st.image('./img/solar_panel.png', width=200)
+            st.image('./img/solar_panel.png', width=150)
             st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
 
     with col2:
