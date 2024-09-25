@@ -8,11 +8,11 @@ class Map:
     def __init__(self, latitude: str, longitude: str) -> None:
         self.latitude = latitude
         self.longitude = longitude
-    
+
     def map_generate(self) -> Any: 
         '''Generate map'''
         m = folium.Map(location=[self.latitude, self.longitude], 
-               zoom_start=18)
+               zoom_start=19)
 
         tile = folium.TileLayer(
             tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -23,7 +23,7 @@ class Map:
         ).add_to(m)
         
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=700, height=500)
+        st_data = st_folium(m, width=1300, height=650)
         
         return st_data
     

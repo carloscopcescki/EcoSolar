@@ -1,4 +1,6 @@
 streamlit
+streamlit_extras
+streamlit_extras.grid
 geopy
 folium
 streamlit_folium

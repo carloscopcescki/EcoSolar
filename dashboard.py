@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_extras.grid import grid
 from commands import *
 from geopy.geocoders import Nominatim
 from opencage.geocoder import OpenCageGeocode
@@ -33,9 +34,9 @@ def main() -> None:
     
     # Input values
     st.sidebar.title("Inserir dados")
-    search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="Fundação Santo André")
+    search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    with st.sidebar.expander("Energia gerada", expanded=True):
+    with st.sidebar.expander("Energia gerada"):
         st.info("Calcular a quantidade de energia gerada por painel solar")
         panel_qty = st.slider("Painéis solares", 0, 150, 1)
         panel_potencial = st.number_input("Potência do painel solar (em kWh)", min_value=0, value=400)
@@ -43,7 +44,7 @@ def main() -> None:
         sys_efficiency_generate = st.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
         day_generate = st.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
 
-    with st.sidebar.expander("Quantidade de painéis solares", expanded=True):
+    with st.sidebar.expander("Quantidade de painéis solares"):
         st.info("Calcular a quantidade de painéis solares para o sistema")
         energy_consumption = st.number_input("Consumo médio mensal de energia (em kWh)", min_value=0, value=550)
         panel = st.number_input("Potência do painel solar (em kWh)", key="panel_potential", min_value=0, value=400)
@@ -53,39 +54,41 @@ def main() -> None:
     
     # Main elements
     st.title("Solar Dash")
-    st.divider()
-    col1, col2 = st.columns(2)
+    st.header("Dados")
+    col1, col2, col3, col4 = st.columns(4)
     
-    col1.header('Dados')
-    col2.header('Mapa')
+    calculate = EnergyCalculate()
+    panel_sys = Panel()
     
     with col1:
-        calculate = EnergyCalculate()
-        panel_sys = Panel()
-
-        col1a, col1b = st.columns(2)
-        with col1a:
-            st.image('./img/tomada.jpg', width=170)
-            st.text(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
-        with col1b:
-            st.image('./img/system.jpg', width=170)
-            st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
-        
-        col2a, col2b = st.columns(2)
-        with col2a:
-            st.image('./img/solar_panel.png', width=170)
-            st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
-
+        st.image('./img/tomada.jpg', width=170)
+        st.text(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
     with col2:
-        if search_location == "":
-            st.warning("Insira um endereço no campo localização")
+        st.image('./img/system.jpg', width=170)
+        st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
+    with col3:
+        st.image('./img/solar_panel.png', width=170)
+        st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
+    with col4:
+        st.text(f"Payback: ")
+
+    st.divider()
+    st.header("Mapa")
+    
+    if search_location == "":
+        st.warning("Insira um endereço no campo localização")
+    else:
+        result = geocoder.geocode(search_location)
+        if result and search_location != "FSA - Anexo II":
+            location = result[0]['geometry']
+            lat, lon = location['lat'], location['lng']
+            map_location = Map(lat, lon)
+            map_location.map_generate()
         else:
-            result = geocoder.geocode(search_location)
-            if result:
-                location = result[0]['geometry']
-                lat, lon = location['lat'], location['lng']
-                map_location = Map(lat, lon)
-                map_location.map_generate()
+            fsa_lat = '-23.6622'
+            fsa_lon = '-46.5541'
+            map_location = Map(fsa_lat, fsa_lon)
+            map_location.map_generate()
 
 if __name__ == "__main__":
     main()
