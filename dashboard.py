@@ -44,25 +44,23 @@ def main() -> None:
         sys_efficiency_generate = st.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
         day_generate = st.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
 
-    with st.sidebar.expander("Quantidade de painéis solares"):
-        st.info("Calcular a quantidade de painéis solares para o sistema")
+    with st.sidebar.expander("Custos"):
+        st.info("Calcular o custo e o payback")
         energy_consumption = st.number_input("Consumo médio mensal de energia (em kWh)", min_value=0, value=550)
-        panel = st.number_input("Potência do painel solar (em kWh)", key="panel_potential", min_value=0, value=400)
-        solar_irrad_panel = st.number_input("Irradiação solar (em kWh/m².dia)", key='irrad-panel', min_value=0.0, value=4.53)
-        sys_efficiency_panel = st.number_input("Eficiência do sistema (%)", key='efficiency-panel', min_value=0, max_value=100, step=5, value=80)
-        day_panel = st.number_input("Número de dias", key='days-panel', min_value=1, max_value=365, step=1, value=30)
-    
+        cost_panel = st.number_input("Custo do painel (R$)", key='cost_panel', min_value=0.0, value=550.00)
+        cost_install = st.number_input("Custo da instalação (R$)", key='cost_install', min_value=0.0, value=10000.00)
+        cost_kwh = st.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
+
     # Main elements
     st.title("Solar Dash")
     
     col1, col2, col3, col4 = st.columns(4)
     
     calculate = EnergyCalculate()
-    panel_sys = Panel()
     
-    col1.metric(label="Energia gerada", value=f"{calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
-    col2.metric(label="Capacidade", value=f"{panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
-    col3.metric(label="Painéis", value=panel_sys.quantity())
+    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
+    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
+    col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Custo", value=f"R$ {5000}")
     style_metric_cards(border_left_color='#6495ED')
 
