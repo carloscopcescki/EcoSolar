@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_extras.grid import grid
+from streamlit_extras.metric_cards import style_metric_cards
 from commands import *
 from geopy.geocoders import Nominatim
 from opencage.geocoder import OpenCageGeocode
@@ -16,7 +16,7 @@ def main() -> None:
         '''
         <style>
         hr {
-            border-color: blue;
+            border-color: #6495ED;
             border-radius: 100px;
         }
         </style>
@@ -54,23 +54,17 @@ def main() -> None:
     
     # Main elements
     st.title("Solar Dash")
-    st.header("Dados")
+    
     col1, col2, col3, col4 = st.columns(4)
     
     calculate = EnergyCalculate()
     panel_sys = Panel()
     
-    with col1:
-        st.image('./img/tomada.jpg', width=170)
-        st.text(f"Energia gerada: {calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
-    with col2:
-        st.image('./img/system.jpg', width=170)
-        st.text(f"Capacidade do sistema: {panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
-    with col3:
-        st.image('./img/solar_panel.png', width=170)
-        st.text(f"Quantidade de painéis: {panel_sys.quantity()}")
-    with col4:
-        st.text(f"Payback: ")
+    col1.metric(label="Energia gerada", value=f"{calculate.generate(panel_qty, panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
+    col2.metric(label="Capacidade", value=f"{panel_sys.capacity(panel, energy_consumption, solar_irrad_panel, sys_efficiency_panel, int(day_panel))}kW")
+    col3.metric(label="Painéis", value=panel_sys.quantity())
+    col4.metric(label="Custo", value=f"R$ {5000}")
+    style_metric_cards(border_left_color='#6495ED')
 
     st.divider()
     st.header("Mapa")
