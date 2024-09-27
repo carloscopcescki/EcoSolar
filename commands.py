@@ -25,7 +25,7 @@ class Map:
         folium.LayerControl().add_to(m)
         st_data = st_folium(m, width=1300, height=650)
         
-        return st_data
+        return None
     
 class EnergyCalculate:
     '''Class to calculate energy potential and solar panel potential'''
@@ -49,9 +49,19 @@ class EnergyCalculate:
     def capacity(self, qty_panel: int) -> float | int:
         '''Return solar panel system capacity'''
         self.qty = qty_panel
-        sys_capacity = self.qty * self.energy_rounded
-        return sys_capacity
+        self.sys_capacity = self.qty * self.energy_rounded
+        return self.sys_capacity
 
-    def Cost(self):
+    def payback(self, cost_sys: float, cost_kwh: float) -> float:
         '''Calculate solar panel system cost'''
+        self.cost_system = cost_sys
+        self.cost_kwh = cost_kwh
+        
+        payback_sys = (self.cost_system / (self.sys_capacity * 12 * self.cost_kwh))
+        payback_rounded = int(payback_sys)
+        return payback_rounded
+        
+        
+        
+        
 

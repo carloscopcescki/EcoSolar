@@ -46,22 +46,20 @@ def main() -> None:
 
     with st.sidebar.expander("Custos"):
         st.info("Calcular o custo e o payback")
-        energy_consumption = st.number_input("Consumo médio mensal de energia (em kWh)", min_value=0, value=550)
-        cost_panel = st.number_input("Custo do painel (R$)", key='cost_panel', min_value=0.0, value=550.00)
-        cost_install = st.number_input("Custo da instalação (R$)", key='cost_install', min_value=0.0, value=10000.00)
+        cost_system = st.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
         cost_kwh = st.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
     # Main elements
+    calculate = EnergyCalculate()
     st.title("Solar Dash")
+    st.header("Dados")
     
     col1, col2, col3, col4 = st.columns(4)
-    
-    calculate = EnergyCalculate()
     
     col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
     col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
-    col4.metric(label="Custo", value=f"R$ {5000}")
+    col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
     style_metric_cards(border_left_color='#6495ED')
 
     st.divider()
