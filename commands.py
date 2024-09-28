@@ -23,7 +23,7 @@ class Map:
         ).add_to(m)
         
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=1300, height=650)
+        st_data = st_folium(m, width=815, height=600)
         
         return None
     

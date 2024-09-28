@@ -61,24 +61,32 @@ def main() -> None:
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
     style_metric_cards(border_left_color='#6495ED')
-
-    st.divider()
-    st.header("Mapa")
     
-    if search_location == "":
-        st.warning("Insira um endereço no campo localização")
-    else:
-        result = geocoder.geocode(search_location)
-        if result and search_location != "FSA - Anexo II":
-            location = result[0]['geometry']
-            lat, lon = location['lat'], location['lng']
-            map_location = Map(lat, lon)
-            map_location.map_generate()
+    st.divider()
+    
+    col1a, col2a = st.columns(2)
+    
+    # Payback line chart
+    with col1a:
+        st.header("Payback")
+        
+    # Map
+    with col2a:
+        st.header("Mapa")
+        if search_location == "":
+            st.warning("Insira um endereço no campo localização")
         else:
-            fsa_lat = '-23.6622'
-            fsa_lon = '-46.5541'
-            map_location = Map(fsa_lat, fsa_lon)
-            map_location.map_generate()
+            result = geocoder.geocode(search_location)
+            if result and search_location != "FSA - Anexo II":
+                location = result[0]['geometry']
+                lat, lon = location['lat'], location['lng']
+                map_location = Map(lat, lon)
+                map_location.map_generate()
+            else:
+                fsa_lat = '-23.6622'
+                fsa_lon = '-46.5541'
+                map_location = Map(fsa_lat, fsa_lon)
+                map_location.map_generate()
 
 if __name__ == "__main__":
     main()
