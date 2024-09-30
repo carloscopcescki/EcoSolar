@@ -64,7 +64,10 @@ def main() -> None:
     style_metric_cards(border_left_color='#6495ED')
     
     st.divider()
-    
+
+    # Payback line chart
+    st.header("Custos")
+
     # Map
     st.header("Mapa")
 
@@ -89,10 +92,6 @@ def main() -> None:
     with col2a:
         st.image("./img/brasil_dni.png", caption="Solar resource map © 2021 Solargis", width=300)
         st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=300)
-    
-    st.divider()
 
-    # Payback line chart
-    st.header("Custos")
 if __name__ == "__main__":
     main()
