@@ -90,8 +90,8 @@ def main() -> None:
                 map_location.map_generate()
     
     with col2a:
-        st.image("./img/brasil_dni.png", caption="Solar resource map © 2021 Solargis", width=300)
-        st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=300)
+        st.image("./img/brasil_dni.png", caption="Solar resource map © 2021 Solargis", width=350)
+        st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=350)
 
 if __name__ == "__main__":
     main()
