@@ -60,8 +60,3 @@ class EnergyCalculate:
         payback_sys = (self.cost_system / (self.sys_capacity * 12 * self.cost_kwh))
         payback_rounded = int(payback_sys)
         return payback_rounded
-        
-        
-        
-        
-

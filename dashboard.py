@@ -46,6 +46,7 @@ def main() -> None:
 
     with st.sidebar.expander("Custos"):
         st.info("Calcular o custo e o payback")
+        energy_consumption = st.number_input("Consumo anual de energia (em kWh)", key='consumption', min_value=0, value=3000)
         cost_system = st.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
         cost_kwh = st.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
@@ -68,7 +69,7 @@ def main() -> None:
     
     # Payback line chart
     with col1a:
-        st.header("Payback")
+        st.header("Custos")
         
     # Map
     with col2a:
