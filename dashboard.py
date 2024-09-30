@@ -53,7 +53,7 @@ def main() -> None:
     # Main elements
     calculate = EnergyCalculate()
     st.title("Solar Dash")
-    st.header("Dados")
+    st.subheader("Dados")
     
     col1, col2, col3, col4 = st.columns(4)
     
@@ -66,12 +66,12 @@ def main() -> None:
     st.divider()
 
     # Payback line chart
-    st.header("Custos")
+    st.subheader("Custos")
 
     st.divider()
 
     # Map
-    st.header("Mapa")
+    st.subheader("Mapa")
 
     col1a, col2a = st.columns([2, 1])
 
@@ -92,8 +92,8 @@ def main() -> None:
                 map_location.map_generate()
     
     with col2a:
-        st.image("./img/brasil_dni.png", width=370)
-        st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=370)
+        st.image("brasil_dni.png", width=370)
+        st.image("brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=370)
 
 if __name__ == "__main__":
     main()
