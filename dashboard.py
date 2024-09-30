@@ -65,15 +65,13 @@ def main() -> None:
     
     st.divider()
     
-    col1a, col2a = st.columns(2)
-    
-    # Payback line chart
-    with col1a:
-        st.header("Custos")
-        
     # Map
-    with col2a:
-        st.header("Mapa")
+    st.header("Mapa")
+
+    col1a, col2a, col3a = st.columns(3)
+        
+    with col1a:
+        
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
@@ -88,6 +86,15 @@ def main() -> None:
                 fsa_lon = '-46.5541'
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
+    
+    with col2a:
+        st.image("./img/brasil_dni.png", caption="Solar resource map © 2021 Solargis")
+    with col3a:
+        st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis")
+    
+    st.divider()
 
+    # Payback line chart
+    st.header("Custos")
 if __name__ == "__main__":
     main()
