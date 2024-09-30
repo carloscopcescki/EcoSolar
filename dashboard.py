@@ -68,17 +68,16 @@ def main() -> None:
     # Map
     st.header("Mapa")
 
-    col1a, col2a, col3a = st.columns(3)
-        
+    col1a, col2a = st.columns([2, 1])
+
     with col1a:
-        
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
             result = geocoder.geocode(search_location)
             if result and search_location != "FSA - Anexo II":
                 location = result[0]['geometry']
-                lat, lon = location['lat'], location['lng']
+                lat, lon = location['lat'], lon = location['lng']
                 map_location = Map(lat, lon)
                 map_location.map_generate()
             else:
@@ -89,7 +88,6 @@ def main() -> None:
     
     with col2a:
         st.image("./img/brasil_dni.png", caption="Solar resource map © 2021 Solargis")
-    with col3a:
         st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis")
     
     st.divider()
