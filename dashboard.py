@@ -57,8 +57,8 @@ def main() -> None:
     
     col1, col2, col3, col4 = st.columns(4)
     
-    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
-    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
+    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}W")
+    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}W")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
     style_metric_cards(border_left_color='#6495ED')
