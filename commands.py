@@ -42,7 +42,7 @@ class EnergyCalculate:
         media_efficiency = self.efficiency / 100
         media_potential = self.panel_potential / 1000
         energy = media_potential * self.irradiation * media_efficiency * self.days
-        self.energy_rounded = int(energy)
+        self.energy_rounded = round(energy, 2)
 
         return self.energy_rounded
 
