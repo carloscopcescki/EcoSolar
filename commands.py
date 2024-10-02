@@ -23,10 +23,10 @@ class Map:
         ).add_to(m)
         
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=815, height=600)
+        st_data = st_folium(m, width=855, height=600)
         
         return None
-    
+
 class EnergyCalculate:
     '''Class to calculate energy potential and solar panel potential'''
     def __init__(self) -> None:
