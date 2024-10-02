@@ -28,27 +28,22 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', width=250)
-    st.sidebar.title("Solar Dash")
-    st.sidebar.write("Dashboard desenvolvido para auxiliar na pesquisa e estudo acerca do potencial energético solar da FSA e a viabilidade de implementação dos painéis solares.")
+    st.sidebar.image('./img/fsa.png', width=220)
     
     # Input values
-    st.sidebar.title("Inserir dados")
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    with st.sidebar.expander("Energia gerada"):
-        st.info("Calcular a quantidade de energia gerada por painel solar")
-        panel_qty = st.slider("Painéis solares", 0, 150, 1)
-        panel_potencial = st.number_input("Potência do painel solar (em Wp)", min_value=0, value=400)
-        solar_irrad_generate = st.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
-        sys_efficiency_generate = st.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
-        day_generate = st.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
+    panel_qty = st.sidebar.slider("Painéis solares", 0, 150, 1)
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (em Wp)", min_value=0, value=400)
+    solar_irrad_generate = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
+    sys_efficiency_generate = st.sidebar.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
+    day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
 
-    with st.sidebar.expander("Custos"):
-        st.info("Calcular o custo e o payback")
-        energy_consumption = st.number_input("Consumo anual de energia (em kWh)", key='consumption', min_value=0, value=3000)
-        cost_system = st.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
-        cost_kwh = st.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
+    st.sidebar.divider()
+ 
+    energy_consumption = st.sidebar.number_input("Consumo anual de energia (em kWh)", key='consumption', min_value=0, value=3000)
+    cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
+    cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
     # Main elements
     calculate = EnergyCalculate()
@@ -65,8 +60,13 @@ def main() -> None:
     
     st.divider()
 
-    # Payback line chart
-    st.subheader("Custos")
+    # Solar and Payback line chart
+    colPb, colEn = st.columns(2)
+    with colPb:
+        st.subheader("Custos")
+    with colEn:
+        # Inserir o gráfico da SunData, criar um gráfico de linha
+        st.subheader("Cálculo")
 
     st.divider()
 
