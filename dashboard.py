@@ -1,8 +1,11 @@
 import streamlit as st
 from streamlit_extras.metric_cards import style_metric_cards
+import streamlit.components.v1 as components
 from commands import *
 from geopy.geocoders import Nominatim
 from opencage.geocoder import OpenCageGeocode
+
+# Importar a biblioteca GSEE para fazer os cálculos do painel fotovoltaico
 
 def main() -> None:
     '''Create dashboard page'''
@@ -28,7 +31,7 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', width=220)
+    st.sidebar.image('./img/fsa.png', width=230)
     
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
@@ -71,11 +74,10 @@ def main() -> None:
     st.divider()
 
     # Map
-    st.subheader("Mapa")
-
-    col1a, col2a, col3a = st.columns(3)
+    col1a, col2a = st.columns(2)
 
     with col1a:
+        st.subheader("Mapa da área")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
@@ -92,9 +94,8 @@ def main() -> None:
                 map_location.map_generate()
     
     with col2a:
-        st.image("./img/brasil_dni.png", width=370)
-    with col3a:
-        st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=370)
-
+        st.subheader("Potencial Energético")
+        #components.iframe(f"https://globalsolaratlas.info/map?s={location['lat']},{location['lng']}&m=bookmark&pv=small,0,24,1&c={location['lat']},{location['lng']},11", height=500)
+    
 if __name__ == "__main__":
     main()
