@@ -39,7 +39,7 @@ def main() -> None:
     with st.sidebar.expander("Energia gerada"):
         st.info("Calcular a quantidade de energia gerada por painel solar")
         panel_qty = st.slider("Painéis solares", 0, 150, 1)
-        panel_potencial = st.number_input("Potência do painel solar (em kWh)", min_value=0, value=400)
+        panel_potencial = st.number_input("Potência do painel solar (em Wp)", min_value=0, value=400)
         solar_irrad_generate = st.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
         sys_efficiency_generate = st.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
         day_generate = st.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
@@ -57,8 +57,8 @@ def main() -> None:
     
     col1, col2, col3, col4 = st.columns(4)
     
-    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}W")
-    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}W")
+    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
+    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
     style_metric_cards(border_left_color='#6495ED')
@@ -73,7 +73,7 @@ def main() -> None:
     # Map
     st.subheader("Mapa")
 
-    col1a, col2a = st.columns([2, 1])
+    col1a, col2a, col3a = st.columns(3)
 
     with col1a:
         if search_location == "":
@@ -93,6 +93,7 @@ def main() -> None:
     
     with col2a:
         st.image("./img/brasil_dni.png", width=370)
+    with col3a:
         st.image("./img/brasil_pvout.png", caption="Solar resource map © 2021 Solargis", width=370)
 
 if __name__ == "__main__":
