@@ -95,7 +95,7 @@ def main() -> None:
     
     with col2a:
         st.subheader("Potencial Energético")
-        #components.iframe(f"https://globalsolaratlas.info/map?s={location['lat']},{location['lng']}&m=bookmark&pv=small,0,24,1&c={location['lat']},{location['lng']},11", height=500)
+        components.iframe(f"https://globalsolaratlas.info/map?s={location['lat']},{location['lng']}&m=bookmark&pv=small,0,24,1&c={location['lat']},{location['lng']},11", height=500)
     
 if __name__ == "__main__":
     main()
