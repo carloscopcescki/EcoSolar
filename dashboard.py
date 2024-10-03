@@ -92,7 +92,7 @@ def main() -> None:
         if search_location == "":
             st.write("") # Insira um endereço no campo localização
         else:
-            lat, lon = result.latitude, result.longitude
+            lat, lon = result['geometry']['lat'], result['geometry']['lng']
             colbt1, colbt2 = st.columns(2)
             if search_location == "FSA - Anexo II":
                 with colbt1:
