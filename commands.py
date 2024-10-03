@@ -23,9 +23,9 @@ class Geolocator:
         result = geocoder.geocode(self.location)
         
         if result:
-            self._cache[self.location] = result
+            self._cache[self.location] = result[0]
         
-        return result
+        return result[0] if result else None
 
 class Map:
     '''Class to generate map and extract coordinates'''

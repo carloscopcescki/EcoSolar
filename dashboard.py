@@ -71,13 +71,14 @@ def main() -> None:
     col1a, col2a = st.columns(2)
     location = Geolocator(search_location)
     result = location.result()
+
     with col1a:
         st.subheader("Mapa da área")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
             if result and search_location != "FSA - Anexo II":
-                lat, lon = result.latitude, result.longitude
+                lat, lon = result['geometry']['lat'], result['geometry']['lng']
                 map_location = Map(lat, lon)
                 map_location.map_generate()
             else:
