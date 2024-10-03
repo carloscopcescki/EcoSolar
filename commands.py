@@ -3,6 +3,7 @@ import folium
 from streamlit_folium import st_folium
 from typing import Any
 from geopy.geocoders import Nominatim
+from opencage.geocoder import OpenCageGeocode
 
 class Geolocator:
     '''Class to return geolocalization with cache'''
@@ -15,8 +16,10 @@ class Geolocator:
         if self.location in self._cache:
             return self._cache[self.location]
         
-        geolocator = Nominatim(user_agent="geoapi")
-        result = geolocator.geocode(self.location)
+        key = st.secrets["secrets"]["api"]
+        geocoder = OpenCageGeocode(key)
+
+        result = geocoder.geocode(self.location)
         
         if result:
             self._cache[self.location] = result
