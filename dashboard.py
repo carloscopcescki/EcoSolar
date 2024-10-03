@@ -4,7 +4,6 @@ import streamlit.components.v1 as components
 from commands import *
 
 # Importar a biblioteca GSEE para fazer os cálculos do painel fotovoltaico
-
 def main() -> None:
     '''Create dashboard page'''
     st.set_page_config(

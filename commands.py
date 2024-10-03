@@ -4,16 +4,23 @@ from streamlit_folium import st_folium
 from typing import Any
 from geopy.geocoders import Nominatim
 
-
 class Geolocator:
-    '''Class to return geolocalization'''
+    '''Class to return geolocalization with cache'''
+    _cache: dict[Any, Any] = {}
+
     def __init__(self, location: str) -> None:
         self.location = location
-        pass
-    
+
     def result(self) -> Any:
+        if self.location in self._cache:
+            return self._cache[self.location]
+        
         geolocator = Nominatim(user_agent="geoapi")
         result = geolocator.geocode(self.location)
+        
+        if result:
+            self._cache[self.location] = result
+        
         return result
 
 class Map:
