@@ -2,6 +2,19 @@ from lib2to3.pytree import convert
 import folium
 from streamlit_folium import st_folium
 from typing import Any
+from geopy.geocoders import Nominatim
+
+
+class Geolocator:
+    '''Class to return geolocalization'''
+    def __init__(self, location: str) -> None:
+        self.location = location
+        pass
+    
+    def result(self) -> Any:
+        geolocator = Nominatim(user_agent="geoapi")
+        result = geolocator.geocode(self.location)
+        return result
 
 class Map:
     '''Class to generate map and extract coordinates'''
@@ -12,7 +25,7 @@ class Map:
     def map_generate(self) -> Any: 
         '''Generate map'''
         m = folium.Map(location=[self.latitude, self.longitude], 
-               zoom_start=19)
+               zoom_start=18)
 
         tile = folium.TileLayer(
             tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -23,7 +36,7 @@ class Map:
         ).add_to(m)
         
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=855, height=600)
+        st_data = st_folium(m, width=800, height=620)
         
         return None
 
@@ -50,7 +63,8 @@ class EnergyCalculate:
         '''Return solar panel system capacity'''
         self.qty = qty_panel
         self.sys_capacity = self.qty * self.energy_rounded
-        return self.sys_capacity
+        self.capacity_rounded = round(self.sys_capacity, 2)
+        return self.capacity_rounded
 
     def payback(self, cost_sys: float, cost_kwh: float) -> float:
         '''Calculate solar panel system cost'''

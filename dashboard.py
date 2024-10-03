@@ -2,8 +2,6 @@ import streamlit as st
 from streamlit_extras.metric_cards import style_metric_cards
 import streamlit.components.v1 as components
 from commands import *
-from geopy.geocoders import Nominatim
-from opencage.geocoder import OpenCageGeocode
 
 # Importar a biblioteca GSEE para fazer os cálculos do painel fotovoltaico
 
@@ -25,9 +23,6 @@ def main() -> None:
         </style>
         '''
     )
-    
-    key = st.secrets["secrets"]["api"]
-    geocoder = OpenCageGeocode(key)
         
     # Sidebar elements
     st.sidebar.empty()
@@ -36,7 +31,7 @@ def main() -> None:
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    panel_qty = st.sidebar.slider("Painéis solares", 0, 150, 1)
+    panel_qty = st.sidebar.slider("Painéis solares", 0, 150, 10)
     panel_potencial = st.sidebar.number_input("Potência do painel solar (em Wp)", min_value=0, value=400)
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
@@ -75,16 +70,15 @@ def main() -> None:
 
     # Map
     col1a, col2a = st.columns(2)
-
+    location = Geolocator(search_location)
+    result = location.result()
     with col1a:
         st.subheader("Mapa da área")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
-            result = geocoder.geocode(search_location)
             if result and search_location != "FSA - Anexo II":
-                location = result[0]['geometry']
-                lat, lon = location['lat'], lon = location['lng']
+                lat, lon = result.latitude, result.longitude
                 map_location = Map(lat, lon)
                 map_location.map_generate()
             else:
@@ -94,8 +88,28 @@ def main() -> None:
                 map_location.map_generate()
     
     with col2a:
-        st.subheader("Potencial Energético")
-        components.iframe(f"https://globalsolaratlas.info/map?s={location['lat']},{location['lng']}&m=bookmark&pv=small,0,24,1&c={location['lat']},{location['lng']},11", height=500)
-    
+        st.subheader("Resultados obtidos")
+        if search_location == "":
+            st.write("") # Insira um endereço no campo localização
+        else:
+            lat, lon = result.latitude, result.longitude
+            colbt1, colbt2 = st.columns(2)
+            if search_location == "FSA - Anexo II":
+                with colbt1:
+                    st.link_button("Mapa energético", "https://globalsolaratlas.info/map?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")
+                with colbt2:
+                    st.link_button("Detalhes do projeto", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")                
+            else:
+                with colbt1:
+                    st.link_button("Mapa energético", f"https://globalsolaratlas.info/map?c={lat},{lon},11&s={lat},{lon}&m=site")
+                with colbt2:
+                    st.link_button("Detalhes do projeto", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
+
+        with st.expander("Potencial Energético", expanded=True):
+            st.image("./img/potencial_energetico.png", width=625)
+        with st.expander("Irradiação Global Horizontal", expanded=False):
+            st.image("./img/irrad_horizontal.png", width=625)
+        with st.expander("Irradiação Direta Normal", expanded=False):
+            st.image("./img/irrad_direta.png", width=625)
 if __name__ == "__main__":
     main()
