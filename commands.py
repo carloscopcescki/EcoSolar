@@ -99,7 +99,7 @@ class EnergyCalculate:
         self.azimuth = azimuth
         self.tilt = tilt
         
-        locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+        locale.setlocale(locale.LC_TIME, 'pt_BR')
         
         site = Location(latitude, longitude, tz='America/Sao_Paulo')
         times = pd.date_range('2024-01-01', '2024-12-31', freq='H', tz=site.tz)
