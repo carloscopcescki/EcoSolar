@@ -6,4 +6,3 @@ streamlit_folium
 opencage
 solarpy
 pvlib
-locale
