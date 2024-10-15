@@ -35,6 +35,8 @@ def main() -> None:
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
     day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
+    tilt = st.sidebar.slider("Inclinação do painel solar (em graus)", 0.0, 90.00, 20.00)
+    azimuth = st.sidebar.slider("Orientação do painel (em graus)", -180, 180, 180)
 
     st.sidebar.divider()
  
@@ -44,6 +46,8 @@ def main() -> None:
 
     # Main elements
     calculate = EnergyCalculate()
+    location = Geolocator(search_location)
+    result = location.result()
     st.title("Solar Dash")
     st.subheader("Dados")
     
@@ -56,21 +60,19 @@ def main() -> None:
     style_metric_cards(border_left_color='#6495ED')
     
     st.divider()
-
-    # Solar and Payback line chart
-    colPb, colEn = st.columns(2)
-    with colPb:
-        st.subheader("Custos")
-    with colEn:
-        # Inserir o gráfico da SunData, criar um gráfico de linha
-        st.subheader("Cálculo")
+    
+    # Solar energy production chart
+    st.subheader("Energia gerada")
+    if result and search_location != "FSA - Anexo II":
+        lat, lon = result['geometry']['lat'], result['geometry']['lng']
+        energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
+    else:
+        energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
 
     st.divider()
 
     # Map
     col1a, col2a = st.columns(2)
-    location = Geolocator(search_location)
-    result = location.result()
 
     with col1a:
         st.subheader("Mapa da área")
@@ -111,5 +113,6 @@ def main() -> None:
             st.image("./img/irrad_horizontal.png", width=625)
         with st.expander("Irradiação Direta Normal", expanded=False):
             st.image("./img/irrad_direta.png", width=625)
+            
 if __name__ == "__main__":
     main()

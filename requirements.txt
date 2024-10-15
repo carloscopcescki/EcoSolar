@@ -4,3 +4,5 @@ geopy
 folium
 streamlit_folium
 opencage
+solarpy
+pvlib
