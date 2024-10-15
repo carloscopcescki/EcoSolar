@@ -123,7 +123,7 @@ class EnergyCalculate:
             'September': 'Setembro', 'October': 'Outubro', 'November': 'Novembro', 'December': 'Dezembro'
         }
         
-        monthly_production.index = monthly_production.index.strftime('%B').map(meses_traduzidos)
+        monthly_production.index = monthly_production.index.strftime('%B').map(months)
         
         fig = go.Figure()
         fig.add_trace(go.Bar(
