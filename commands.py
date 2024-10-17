@@ -10,6 +10,7 @@ from pvlib.location import Location
 from pvlib import irradiance
 import pandas as pd
 import plotly.graph_objects as go
+import locale
 
 class Geolocator:
     '''Class to return geolocalization with cache'''
@@ -98,6 +99,8 @@ class EnergyCalculate:
         self.azimuth = azimuth
         self.tilt = tilt
         
+        locale.setlocale(locale.LC_TIME, 'pt_BR')
+        
         site = Location(latitude, longitude, tz='America/Sao_Paulo')
         times = pd.date_range('2024-01-01', '2024-12-31', freq='H', tz=site.tz)
         solar_position = site.get_solarposition(times)
@@ -113,17 +116,10 @@ class EnergyCalculate:
             dhi=irradiation_data['dhi']
         )
         
-        hourly_production = (poa_irrad['poa_global'] / 1000) * (self.panel_potential / 1000) * self.efficiency
+        hourly_production = (poa_irrad['poa_global'] / 1000) * (self.panel_potential / 100) * self.efficiency
         daily_production = hourly_production.resample('D').sum()
         monthly_production = daily_production.resample('M').sum()
-                
-        months = {
-            'January': 'Janeiro', 'February': 'Fevereiro', 'March': 'Março', 'April': 'Abril',
-            'May': 'Maio', 'June': 'Junho', 'July': 'Julho', 'August': 'Agosto',
-            'September': 'Setembro', 'October': 'Outubro', 'November': 'Novembro', 'December': 'Dezembro'
-        }
-        
-        monthly_production.index = monthly_production.index.strftime('%B').map(months)
+        monthly_production.index = monthly_production.index.strftime('%B')
         
         fig = go.Figure()
         fig.add_trace(go.Bar(
@@ -134,7 +130,7 @@ class EnergyCalculate:
         ))
 
         fig.update_layout(
-            title_text='Produção de Energia Solar',
+            title_text='Produção de Energia Solar (por mês)',
             xaxis=dict(title='Mês', type='category'),
             yaxis=dict(title='Energia (kWh)')
         )
