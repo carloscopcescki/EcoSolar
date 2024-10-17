@@ -79,7 +79,7 @@ def main() -> None:
                 fsa_lon = '-46.5541'
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
-                st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
+                st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={fsa_lat},{fsa_lon},11&s={fsa_lat},{fsa_lon}&m=site")
 
     # Solar energy production chart
     with col2a:
