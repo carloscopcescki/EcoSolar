@@ -62,7 +62,7 @@ def main() -> None:
     st.divider()
 
     # Map
-    col1a, col2a = st.columns(2, gap="medium")
+    col1a, col2a = st.columns(2, gap="large")
 
     # Solar energy production chart
     with col1a:
