@@ -64,7 +64,16 @@ def main() -> None:
     # Map
     col1a, col2a = st.columns(2)
 
+    # Solar energy production chart
     with col1a:
+        st.subheader("Energia gerada")
+        if result and search_location != "FSA - Anexo II":
+            lat, lon = result['geometry']['lat'], result['geometry']['lng']
+            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
+        else:
+            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
+            
+    with col2a:
         st.subheader("Mapa")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
@@ -80,15 +89,6 @@ def main() -> None:
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
                 st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={fsa_lat},{fsa_lon},11&s={fsa_lat},{fsa_lon}&m=site")
-
-    # Solar energy production chart
-    with col2a:
-        st.subheader("Energia gerada")
-        if result and search_location != "FSA - Anexo II":
-            lat, lon = result['geometry']['lat'], result['geometry']['lng']
-            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
-        else:
-            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
 
 if __name__ == "__main__":
     main()
