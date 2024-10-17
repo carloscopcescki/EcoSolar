@@ -82,13 +82,11 @@ def main() -> None:
                 lat, lon = result['geometry']['lat'], result['geometry']['lng']
                 map_location = Map(lat, lon)
                 map_location.map_generate()
-                st.link_button("Relatório Atlas Global", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")  
             else:
                 fsa_lat = '-23.6622'
                 fsa_lon = '-46.5541'
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
-                st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={fsa_lat},{fsa_lon},11&s={fsa_lat},{fsa_lon}&m=site")
 
 if __name__ == "__main__":
     main()
