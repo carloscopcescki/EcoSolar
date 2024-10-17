@@ -60,22 +60,12 @@ def main() -> None:
     style_metric_cards(border_left_color='#6495ED')
     
     st.divider()
-    
-    # Solar energy production chart
-    st.subheader("Energia gerada")
-    if result and search_location != "FSA - Anexo II":
-        lat, lon = result['geometry']['lat'], result['geometry']['lng']
-        energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
-    else:
-        energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
-
-    st.divider()
 
     # Map
-    st.subheader("Mapa da área")
     col1a, col2a = st.columns(2)
 
     with col1a:
+        st.subheader("Mapa")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
@@ -83,21 +73,22 @@ def main() -> None:
                 lat, lon = result['geometry']['lat'], result['geometry']['lng']
                 map_location = Map(lat, lon)
                 map_location.map_generate()
+                st.link_button("Relatório Atlas Global", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")  
             else:
                 fsa_lat = '-23.6622'
                 fsa_lon = '-46.5541'
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
-    
-    with col2a:
-        if search_location == "":
-            st.write("") # Insira um endereço no campo localização
-        else:
-            lat, lon = result['geometry']['lat'], result['geometry']['lng']
-            if search_location == "FSA - Anexo II":
-                st.link_button("Relatório Atlas Global", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")                
-            else:
                 st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
-            
+
+    # Solar energy production chart
+    with col2a:
+        st.subheader("Energia gerada")
+        if result and search_location != "FSA - Anexo II":
+            lat, lon = result['geometry']['lat'], result['geometry']['lng']
+            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
+        else:
+            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
+
 if __name__ == "__main__":
     main()
