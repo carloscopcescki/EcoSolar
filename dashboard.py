@@ -72,10 +72,10 @@ def main() -> None:
     st.divider()
 
     # Map
+    st.subheader("Mapa da área")
     col1a, col2a = st.columns(2)
 
     with col1a:
-        st.subheader("Mapa da área")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
@@ -90,29 +90,14 @@ def main() -> None:
                 map_location.map_generate()
     
     with col2a:
-        st.subheader("Resultados obtidos")
         if search_location == "":
             st.write("") # Insira um endereço no campo localização
         else:
             lat, lon = result['geometry']['lat'], result['geometry']['lng']
-            colbt1, colbt2 = st.columns(2)
             if search_location == "FSA - Anexo II":
-                with colbt1:
-                    st.link_button("Mapa energético", "https://globalsolaratlas.info/map?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")
-                with colbt2:
-                    st.link_button("Detalhes do projeto", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")                
+                st.link_button("Relatório Atlas Global", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")                
             else:
-                with colbt1:
-                    st.link_button("Mapa energético", f"https://globalsolaratlas.info/map?c={lat},{lon},11&s={lat},{lon}&m=site")
-                with colbt2:
-                    st.link_button("Detalhes do projeto", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
-
-        with st.expander("Potencial Energético", expanded=True):
-            st.image("./img/potencial_energetico.png", width=625)
-        with st.expander("Irradiação Global Horizontal", expanded=False):
-            st.image("./img/irrad_horizontal.png", width=625)
-        with st.expander("Irradiação Direta Normal", expanded=False):
-            st.image("./img/irrad_direta.png", width=625)
+                st.link_button("Relatório Atlas Global", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
             
 if __name__ == "__main__":
     main()
