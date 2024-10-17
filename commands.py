@@ -52,7 +52,7 @@ class Map:
         ).add_to(m)
 
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=800, height=620)
+        st_data = st_folium(m, width=500, height=450)
 
         return None
 
@@ -134,7 +134,7 @@ class EnergyCalculate:
         ))
 
         fig.update_layout(
-            title_text='Produção de Energia Solar',
+            title_text='Produção Mensal de Energia Solar (kWh)',
             xaxis=dict(title='Mês', type='category'),
             yaxis=dict(title='Energia (kWh)')
         )
