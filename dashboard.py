@@ -24,22 +24,23 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', width=230)
+    #st.sidebar.image('./img/fsa.png', width=230)
     
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    panel_qty = st.sidebar.slider("Painéis solares", 0, 150, 10)
-    panel_potencial = st.sidebar.number_input("Potência do painel solar (em Wp)", min_value=0, value=400)
-    solar_irrad_generate = st.sidebar.number_input("Irradiação solar (em kWh/m².dia)", min_value=0.0, value=4.53)
-    sys_efficiency_generate = st.sidebar.number_input("Eficiência do sistema (%)", key='efficiency-generated', min_value=0, max_value=100, step=5, value=80)
+    panel_qty = st.sidebar.slider("Painéis solares", 1, 150, 10)
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0, value=400)
+    module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
+    solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
+    sys_efficiency_generate = st.sidebar.number_input("Desempenho do sistema (%)", key='efficiency-generated', min_value=0.0, max_value=100.0, step=0.1, value=80.0)
     day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
-    tilt = st.sidebar.slider("Inclinação do painel solar (em graus)", 0.0, 90.00, 20.00)
-    azimuth = st.sidebar.slider("Orientação do painel (em graus)", -180, 180, 180)
+    tilt = st.sidebar.slider("Inclinação do painel solar (°)", 0.0, 90.00, 20.00)
+    azimuth = st.sidebar.slider("Orientação do painel (°)", -180, 180, 180)
 
     st.sidebar.divider()
  
-    energy_consumption = st.sidebar.number_input("Consumo anual de energia (em kWh)", key='consumption', min_value=0, value=3000)
+    energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
     cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
@@ -57,24 +58,21 @@ def main() -> None:
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
     style_metric_cards(border_left_color='#6495ED')
-    
-    st.divider()
-    
-    # Solar energy production chart
-    st.subheader("Energia gerada")
-    if result and search_location != "FSA - Anexo II":
-        lat, lon = result['geometry']['lat'], result['geometry']['lng']
-        energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
-    else:
-        energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
-
-    st.divider()
 
     # Map
-    col1a, col2a = st.columns(2)
+    col1a, col2a = st.columns(2, gap="medium")
 
+    # Solar energy production chart
     with col1a:
-        st.subheader("Mapa da área")
+        st.subheader("Energia gerada")
+        if result and search_location != "FSA - Anexo II":
+            lat, lon = result['geometry']['lat'], result['geometry']['lng']
+            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt, module_efficiency)
+        else:
+            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt, module_efficiency)
+            
+    with col2a:
+        st.subheader("Mapa")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:
@@ -87,31 +85,6 @@ def main() -> None:
                 fsa_lon = '-46.5541'
                 map_location = Map(fsa_lat, fsa_lon)
                 map_location.map_generate()
-    
-    with col2a:
-        st.subheader("Resultados obtidos")
-        if search_location == "":
-            st.write("") # Insira um endereço no campo localização
-        else:
-            lat, lon = result['geometry']['lat'], result['geometry']['lng']
-            colbt1, colbt2 = st.columns(2)
-            if search_location == "FSA - Anexo II":
-                with colbt1:
-                    st.link_button("Mapa energético", "https://globalsolaratlas.info/map?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")
-                with colbt2:
-                    st.link_button("Detalhes do projeto", "https://globalsolaratlas.info/detail?c=-23.661511,-46.55495,11&s=-23.661511,-46.55495&m=site")                
-            else:
-                with colbt1:
-                    st.link_button("Mapa energético", f"https://globalsolaratlas.info/map?c={lat},{lon},11&s={lat},{lon}&m=site")
-                with colbt2:
-                    st.link_button("Detalhes do projeto", f"https://globalsolaratlas.info/detail?c={lat},{lon},11&s={lat},{lon}&m=site")
 
-        with st.expander("Potencial Energético", expanded=True):
-            st.image("./img/potencial_energetico.png", width=625)
-        with st.expander("Irradiação Global Horizontal", expanded=False):
-            st.image("./img/irrad_horizontal.png", width=625)
-        with st.expander("Irradiação Direta Normal", expanded=False):
-            st.image("./img/irrad_direta.png", width=625)
-            
 if __name__ == "__main__":
     main()
