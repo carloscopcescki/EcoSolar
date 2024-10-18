@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_extras.metric_cards import style_metric_cards
-import streamlit.components.v1 as components
 from commands import *
 
 # Importar a biblioteca GSEE para fazer os cálculos do painel fotovoltaico
