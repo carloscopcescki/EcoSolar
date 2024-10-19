@@ -24,14 +24,14 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    #st.sidebar.image('./img/fsa.png', width=230)
+    st.sidebar.image('./img/fsa.png', width=275)
     
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
     panel_qty = st.sidebar.slider("Painéis solares", 1, 150, 10)
     panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0, value=400)
-    module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
+    #module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Desempenho do sistema (%)", key='efficiency-generated', min_value=0.0, max_value=100.0, step=0.1, value=80.0)
     day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
@@ -40,7 +40,7 @@ def main() -> None:
 
     st.sidebar.divider()
  
-    energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
+    #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
     cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
@@ -60,16 +60,16 @@ def main() -> None:
     style_metric_cards(border_left_color='#6495ED')
 
     # Map
-    col1a, col2a = st.columns(2, gap="medium")
+    col1a, col2a = st.columns(2, gap="large")
 
     # Solar energy production chart
     with col1a:
         st.subheader("Energia gerada")
         if result and search_location != "FSA - Anexo II":
             lat, lon = result['geometry']['lat'], result['geometry']['lng']
-            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt, module_efficiency)
+            energy_chart = calculate.energy_generated_chart(lat, lon, azimuth, tilt)
         else:
-            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt, module_efficiency)
+            energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
             
     with col2a:
         st.subheader("Mapa")
