@@ -7,7 +7,7 @@ def main() -> None:
     '''Create dashboard page'''
     st.set_page_config(
         page_title='EcoSolar',
-        page_icon=':mostly_sunny:',
+        page_icon='☀️',
         layout='wide'
     )
     
@@ -25,7 +25,7 @@ def main() -> None:
     st.markdown(
         """
         <div style="background-color:#880808";padding:10px;border-radius:20px">
-        <h1 style="color:white;text-align:center;">EcoSolar ☀️</h1>
+        <h1 style="color:white;text-align:center;">EcoSolar</h1>
         </div>
         """,
         unsafe_allow_html=True,
