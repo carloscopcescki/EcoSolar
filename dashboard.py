@@ -6,8 +6,8 @@ from commands import *
 def main() -> None:
     '''Create dashboard page'''
     st.set_page_config(
-        page_title='Solar Dash',
-        page_icon=':sunrise:',
+        page_title='EcoSolar',
+        page_icon=':mostly_sunny:',
         layout='wide'
     )
     
@@ -15,16 +15,25 @@ def main() -> None:
         '''
         <style>
         hr {
-            border-color: #6495ED;
+            border-color: #880808;
             border-radius: 100px;
         }
         </style>
         '''
     )
+    
+    st.markdown(
+        """
+        <div style="background-color:#880808";padding:10px;border-radius:20px">
+        <h1 style="color:white;text-align:center;">EcoSolar ☀️</h1>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', width=230)
+    st.sidebar.image('./img/ecosolar.png', width=200)
     
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
@@ -37,9 +46,8 @@ def main() -> None:
     day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
     tilt = st.sidebar.slider("Inclinação do painel solar (°)", 0.0, 90.00, 24.00)
     azimuth = st.sidebar.slider("Orientação do painel (°)", -180, 180, 0)
-
+    
     st.sidebar.divider()
- 
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
     cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=10000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
@@ -48,7 +56,7 @@ def main() -> None:
     calculate = EnergyCalculate()
     location = Geolocator(search_location)
     result = location.result()
-    st.title("Solar Dash")
+    st.divider()
     st.subheader("Dados")
     
     col1, col2, col3, col4 = st.columns(4)
@@ -57,10 +65,10 @@ def main() -> None:
     col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
-    style_metric_cards(border_left_color='#6495ED')
+    style_metric_cards(background_color="#0E1117",border_left_color='#880808', border_color='#880808')
 
     # Map
-    col1a, col2a = st.columns(2)
+    col1a, col2a, col3a = st.columns([2.7,0.3,2])
 
     # Solar energy production chart
     with col1a:
@@ -71,8 +79,8 @@ def main() -> None:
         else:
             energy_chart = calculate.energy_generated_chart(-23.6622, -46.5541, azimuth, tilt)
             
-    with col2a:
-        st.subheader("Mapa")
+    with col3a:
+        st.subheader(f"Mapa {search_location}")
         if search_location == "":
             st.warning("Insira um endereço no campo localização")
         else:

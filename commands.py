@@ -90,7 +90,7 @@ class EnergyCalculate:
 
         payback_sys = (self.cost_system /
                        (self.sys_capacity * 12 * self.cost_kwh))
-        payback_rounded = int(payback_sys)
+        payback_rounded = round(payback_sys,1)
         return payback_rounded
 
     def energy_generated_chart(self, latitude: float, longitude: float, azimuth: float, tilt: float) -> Any:
@@ -132,7 +132,7 @@ class EnergyCalculate:
             x=monthly_production.index,
             y=monthly_production.values,
             name="Produção de Energia Solar (kWh)",
-            marker_color='#6495ED'
+            marker_color='#880808'
         ))
 
         fig.update_layout(
