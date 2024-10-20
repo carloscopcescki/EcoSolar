@@ -50,7 +50,7 @@ class Map:
             max_zoom=19).add_to(m)
 
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=520, height=380)
+        st_data = st_folium(m, width=650, height=380)
 
         return None
 
@@ -117,7 +117,7 @@ class EnergyCalculate:
 
         hourly_production = (poa_irrad['poa_global'] / 1000) * (self.panel_potential / 1000) * self.efficiency
         daily_production = hourly_production.resample('D').sum()
-        monthly_production = daily_production.resample('M').sum()
+        monthly_production = daily_production.resample('M').sum() / 100
 
         months = {
             'January': 'Janeiro', 'February': 'Fevereiro', 'March': 'Março', 'April': 'Abril',

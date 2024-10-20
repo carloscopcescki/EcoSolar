@@ -30,13 +30,13 @@ def main() -> None:
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
     panel_qty = st.sidebar.slider("Painéis solares", 1, 150, 10)
-    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0, value=400)
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=142.40)
     #module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Desempenho do sistema (%)", key='efficiency-generated', min_value=0.0, max_value=100.0, step=0.1, value=80.0)
     day_generate = st.sidebar.number_input("Número de dias", key='days-generated', min_value=1, max_value=365, step=1, value=30)
-    tilt = st.sidebar.slider("Inclinação do painel solar (°)", 0.0, 90.00, 20.00)
-    azimuth = st.sidebar.slider("Orientação do painel (°)", -180, 180, 180)
+    tilt = st.sidebar.slider("Inclinação do painel solar (°)", 0.0, 90.00, 24.00)
+    azimuth = st.sidebar.slider("Orientação do painel (°)", -180, 180, 0)
 
     st.sidebar.divider()
  
@@ -60,7 +60,7 @@ def main() -> None:
     style_metric_cards(border_left_color='#6495ED')
 
     # Map
-    col1a, col2a = st.columns(2, gap="medium")
+    col1a, col2a = st.columns(2)
 
     # Solar energy production chart
     with col1a:
