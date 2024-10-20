@@ -88,8 +88,9 @@ class EnergyCalculate:
         self.cost_system = cost_sys
         self.cost_kwh = cost_kwh
 
-        payback_sys = (self.cost_system /
-                       (self.sys_capacity * 12 * self.cost_kwh))
+        economy = self.capacity_rounded * cost_kwh
+        payback_sys = cost_sys / economy
+        
         payback_rounded = round(payback_sys,1)
         return payback_rounded
 
