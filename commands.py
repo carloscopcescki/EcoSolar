@@ -50,7 +50,7 @@ class Map:
             max_zoom=19).add_to(m)
 
         folium.LayerControl().add_to(m)
-        st_data = st_folium(m, width=600, height=380)
+        st_data = st_folium(m, width=580, height=380)
 
         return None
 
