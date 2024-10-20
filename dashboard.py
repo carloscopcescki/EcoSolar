@@ -24,7 +24,7 @@ def main() -> None:
         
     # Sidebar elements
     st.sidebar.empty()
-    st.sidebar.image('./img/fsa.png', width=275)
+    st.sidebar.image('./img/fsa.png', width=230)
     
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
