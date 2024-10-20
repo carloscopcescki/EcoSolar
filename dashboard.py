@@ -68,7 +68,7 @@ def main() -> None:
     style_metric_cards(background_color="#0E1117",border_left_color='#880808', border_color='#880808')
 
     # Map
-    col1a, col2a, col3a = st.columns([2.7,0.3,2])
+    col1a, col2a, col3a = st.columns([2.7,0.2,2])
 
     # Solar energy production chart
     with col1a:
