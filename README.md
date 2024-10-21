@@ -3,10 +3,8 @@
 ## Descrição
 EcoSolar é um aplicativo desenvolvido em Python para calcular a produção estimada de um sistema fotovoltaico. A partir dos dados imputados pelo usuário e a localização (latitude e longitude) do módulo, o sistema realiza o cálculo para analisar a produção de energia solar estimada e o payback aproximado.
 
-## Linguagem utilizada
-- Python
-
 ## Ferramentas utilizadas
+- Python 3.11
 - streamlit
 - pvlib
 - pandas
