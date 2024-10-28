@@ -51,7 +51,7 @@ def main() -> None:
     st.sidebar.subheader("Payback")
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
     #cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
-    cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
+    cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.01, value=0.65)
 
     # Main elements
     calculate = EnergyCalculate()
