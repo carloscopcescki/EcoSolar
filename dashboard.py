@@ -38,7 +38,7 @@ def main() -> None:
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 356)
+    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 20)
     panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=400.0)
     #module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
@@ -50,7 +50,7 @@ def main() -> None:
     st.sidebar.divider()
     st.sidebar.subheader("Payback")
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
-    cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=897200.00)
+    cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.60)
 
     # Main elements
