@@ -38,8 +38,8 @@ def main() -> None:
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 60)
-    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=550.0)
+    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 20)
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=400.0)
     #module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Desempenho do sistema (%)", key='efficiency-generated', min_value=0.0, max_value=100.0, step=0.1, value=75.0)
@@ -51,7 +51,7 @@ def main() -> None:
     st.sidebar.subheader("Payback")
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
     #cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
-    cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.60)
+    cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.65)
 
     # Main elements
     calculate = EnergyCalculate()
@@ -65,7 +65,7 @@ def main() -> None:
     col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
     col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
-    col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_kwh)} anos")
+    col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_kwh, panel_qty, panel_potencial)} anos")
     style_metric_cards(background_color="#0E1117",border_left_color='#880808', border_color='#880808')
 
     # Map
