@@ -38,8 +38,8 @@ def main() -> None:
     # Input values
     search_location = st.sidebar.text_input("Pesquise um endereço", placeholder="Insira uma localização", value="FSA - Anexo II")
 
-    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 20)
-    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=400.0)
+    panel_qty = st.sidebar.slider("Quantidade de painéis solares", 1, 400, 60)
+    panel_potencial = st.sidebar.number_input("Potência do painel solar (Wp)", min_value=0.0, value=550.0)
     #module_efficiency = st.sidebar.number_input("Eficiência do módulo (%)", min_value=0.0, max_value=100.0, step=0.1, value=20.2, format='%f') / 100
     solar_irrad_generate = st.sidebar.number_input("Irradiação solar (kWh/m².dia)", min_value=0.0, value=4.53)
     sys_efficiency_generate = st.sidebar.number_input("Desempenho do sistema (%)", key='efficiency-generated', min_value=0.0, max_value=100.0, step=0.1, value=75.0)
