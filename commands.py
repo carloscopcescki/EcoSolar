@@ -100,7 +100,7 @@ class EnergyCalculate:
         cost_install = system_capacity_kw * 5500  # Custo médio de instalação (R$ 5.500 por kW)
 
         self.payback_sys = cost_install / annual_economy
-        return round(self.payback_sys, 2)
+        return math.floor(self.payback_sys)
 
     def energy_generated_chart(self, latitude: float, longitude: float,
                                azimuth: float, tilt: float) -> Any:
