@@ -7,6 +7,7 @@ from pvlib.location import Location
 from pvlib import irradiance
 import pandas as pd
 import plotly.graph_objects as go
+import math
 
 class Geolocator:
     '''Class to return geolocalization with cache'''
@@ -83,15 +84,21 @@ class EnergyCalculate:
         self.capacity_rounded = round(self.sys_capacity, 2)
         return self.capacity_rounded
 
-    def payback(self, cost_sys: float, cost_kwh: float) -> float:
+    def payback(self, cost_kwh: float) -> float:
         '''Calculate solar panel system cost'''
-        self.cost_system = cost_sys
         self.cost_kwh = cost_kwh
 
-        economy = self.capacity_rounded * cost_kwh
-        payback_sys = cost_sys / economy
+        sys_rounded = ((self.qty * self.panel_potential) / 1000)
+        daily_energy = sys_rounded * 4.5 # 4 a 5 horas de sol por dia 
+        monthly_energy = daily_energy * 30
         
-        payback_rounded = round(payback_sys,1)
+        monthly_economy = monthly_energy * cost_kwh
+        annual_economy = monthly_economy * 12
+        
+        self.cost_install = sys_rounded * 5500 # Custo médio de instalação (R$ 5.500,00)
+        
+        payback_sys = self.cost_install / annual_economy
+        payback_rounded = math.floor(payback_sys)
         return payback_rounded
 
     def energy_generated_chart(self, latitude: float, longitude: float, azimuth: float, tilt: float) -> Any:

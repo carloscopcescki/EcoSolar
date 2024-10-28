@@ -50,7 +50,7 @@ def main() -> None:
     st.sidebar.divider()
     st.sidebar.subheader("Payback")
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
-    cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
+    #cost_system = st.sidebar.number_input("Custo do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.60)
 
     # Main elements
@@ -65,7 +65,7 @@ def main() -> None:
     col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
     col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
-    col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_system, cost_kwh)} anos")
+    col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_kwh)} anos")
     style_metric_cards(background_color="#0E1117",border_left_color='#880808', border_color='#880808')
 
     # Map
