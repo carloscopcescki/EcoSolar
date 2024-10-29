@@ -20,7 +20,7 @@ class Geolocator:
         if self.location in self._cache:
             return self._cache[self.location]
 
-        key = st.secrets["secrets"]["api"]
+        key = "4892bb222a594a99a1e75447a3ae333d"
         geocoder = OpenCageGeocode(key)
 
         result = geocoder.geocode(self.location)
@@ -84,24 +84,22 @@ class EnergyCalculate:
         self.capacity_rounded = round(self.sys_capacity, 2)
         return self.capacity_rounded
 
-    def payback(self, cost_kwh: float) -> float:
-        '''Calculate solar panel system cost'''
+    def payback(self, cost_kwh: float, system_capacity_kw: float, total_cost: float) -> float:
+        '''Calculate payback period for the solar panel system'''
         self.cost_kwh = cost_kwh
-
-        sys_rounded = ((self.module_quantity * self.panel_potential) / 1000)
-        daily_energy = sys_rounded * 4.5 # 4 a 5 horas de sol por dia 
-        monthly_energy = daily_energy * 30
+        self.system_capacity_kw = system_capacity_kw
+        self.total_cost = total_cost
         
+        daily_energy = system_capacity_kw * 4.5
+        monthly_energy = daily_energy * 30
         monthly_economy = monthly_energy * cost_kwh
         annual_economy = monthly_economy * 12
-        
-        self.cost_install = sys_rounded * 5500 # Custo médio de instalação (R$ 5.500,00)
-        
-        payback_sys = self.cost_install / annual_economy
-        payback_rounded = math.floor(payback_sys)
-        return payback_rounded
 
-    def energy_generated_chart(self, latitude: float, longitude: float, azimuth: float, tilt: float) -> Any:
+        payback_sys = total_cost / annual_economy
+        return math.floor(payback_sys)
+
+    def energy_generated_chart(self, latitude: float, longitude: float,
+                               azimuth: float, tilt: float) -> Any:
         '''Generated solar energy chart '''
         self.latitude = latitude
         self.longitude = longitude
@@ -120,41 +118,42 @@ class EnergyCalculate:
             solar_azimuth=solar_position['azimuth'],
             dni=irradiation_data['dni'],
             ghi=irradiation_data['ghi'],
-            dhi=irradiation_data['dhi']
-        )
+            dhi=irradiation_data['dhi'])
 
-        hourly_production = (poa_irrad['poa_global'] / 1000) * (self.panel_potential / 1000) * self.efficiency
+        hourly_production = (poa_irrad['poa_global'] / 1000) * (
+            self.panel_potential / 1000) * self.efficiency
         daily_production = hourly_production.resample('D').sum()
         monthly_production = daily_production.resample('M').sum() / 100
 
         months = {
-            'January': 'Janeiro', 'February': 'Fevereiro', 'March': 'Março', 'April': 'Abril',
-            'May': 'Maio', 'June': 'Junho', 'July': 'Julho', 'August': 'Agosto',
-            'September': 'Setembro', 'October': 'Outubro', 'November': 'Novembro', 'December': 'Dezembro'
+            'January': 'Janeiro',
+            'February': 'Fevereiro',
+            'March': 'Março',
+            'April': 'Abril',
+            'May': 'Maio',
+            'June': 'Junho',
+            'July': 'Julho',
+            'August': 'Agosto',
+            'September': 'Setembro',
+            'October': 'Outubro',
+            'November': 'Novembro',
+            'December': 'Dezembro'
         }
 
-        monthly_production.index = monthly_production.index.strftime('%B').map(months)
+        monthly_production.index = monthly_production.index.strftime('%B').map(
+            months)
 
         fig = go.Figure()
-        fig.add_trace(go.Bar(
-            x=monthly_production.index,
-            y=monthly_production.values,
-            name="Produção de Energia Solar (kWh)",
-            marker_color='#880808'
-        ))
+        fig.add_trace(
+            go.Bar(x=monthly_production.index,
+                   y=monthly_production.values,
+                   name="Produção de Energia Solar (kWh)",
+                   marker_color='#880808'))
 
         fig.update_layout(
             title_text='Produção de Energia Solar Estimada (kWh)',
-            xaxis=dict(
-                title='Mês', 
-                type='category',
-                tickformat='.0f'
-            ),
-            yaxis=dict(
-                title='Energia (kWh)',
-                tickformat='.0f',
-                ticksuffix='k'
-            )
-        )
+            xaxis=dict(title='Mês', type='category', tickformat='.0f'),
+            yaxis=dict(title='Energia (kWh)', tickformat='.0f',
+                       ticksuffix='k'))
 
         return st.plotly_chart(fig)
