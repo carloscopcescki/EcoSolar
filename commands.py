@@ -84,18 +84,16 @@ class EnergyCalculate:
         self.capacity_rounded = round(self.sys_capacity, 2)
         return self.capacity_rounded
 
-    def payback(self, cost_kwh: float, system_capacity_kw: float, cost_install: float) -> float:
+    def payback(self, cost_kwh: float, system_capacity_kw: float, total_cost: float) -> float:
         '''Calculate payback period for the solar panel system'''
         self.cost_kwh = cost_kwh
         self.system_capacity_kw = system_capacity_kw
-        self.install_cost = cost_install
+        self.total_cost = total_cost
         
         daily_energy = system_capacity_kw * 4.5
         monthly_energy = daily_energy * 30
-        monthly_economy = monthly_energy * self.cost_kwh
+        monthly_economy = monthly_energy * cost_kwh
         annual_economy = monthly_economy * 12
-
-        total_cost = system_capacity_kw * cost_install  # Custo médio de instalação
 
         payback_sys = total_cost / annual_economy
         return math.floor(payback_sys)
