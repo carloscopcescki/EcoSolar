@@ -62,7 +62,6 @@ class EnergyCalculate:
     def __init__(self, panel_potential: float, module_quantity: int) -> None:
         self.panel_potential = panel_potential
         self.module_quantity = module_quantity
-        pass
 
     def generate(self, irradiation: float,
                  efficiency: float, days: int) -> float | int:
