@@ -59,13 +59,14 @@ class Map:
 class EnergyCalculate:
     '''Class to calculate energy potential and solar panel potential'''
 
-    def __init__(self) -> None:
+    def __init__(self, panel_potential: float, module_quantity: int) -> None:
+        self.panel_potential = panel_potential
+        self.module_quantity = module_quantity
         pass
 
-    def generate(self, panel_potential: float, irradiation: float,
+    def generate(self, irradiation: float,
                  efficiency: float, days: int) -> float | int:
         '''Calculate energy generated'''
-        self.panel_potential = panel_potential
         self.irradiation = irradiation
         self.efficiency = efficiency
         self.days = days
@@ -77,10 +78,9 @@ class EnergyCalculate:
 
         return self.energy_rounded
 
-    def capacity(self, qty_panel: int) -> float | int:
+    def capacity(self) -> float | int:
         '''Return solar panel system capacity'''
-        self.qty = qty_panel
-        self.sys_capacity = self.qty * self.energy_rounded
+        self.sys_capacity = self.module_quantity * self.energy_rounded
         self.capacity_rounded = round(self.sys_capacity, 2)
         return self.capacity_rounded
 
@@ -88,7 +88,7 @@ class EnergyCalculate:
         '''Calculate solar panel system cost'''
         self.cost_kwh = cost_kwh
 
-        sys_rounded = ((self.qty * self.panel_potential) / 1000)
+        sys_rounded = ((self.module_quantity * self.panel_potential) / 1000)
         daily_energy = sys_rounded * 4.5 # 4 a 5 horas de sol por dia 
         monthly_energy = daily_energy * 30
         

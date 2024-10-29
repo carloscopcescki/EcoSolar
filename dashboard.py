@@ -54,7 +54,7 @@ def main() -> None:
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)", key='cost_kwh', min_value=0.0, value=0.60)
 
     # Main elements
-    calculate = EnergyCalculate()
+    calculate = EnergyCalculate(panel_potencial, panel_qty)
     location = Geolocator(search_location)
     result = location.result()
     st.divider()
@@ -62,8 +62,8 @@ def main() -> None:
     
     col1, col2, col3, col4 = st.columns(4)
     
-    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(panel_potencial, solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
-    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity(panel_qty)}kWh")
+    col1.metric(label="Energia gerada por painel", value=f"{calculate.generate(solar_irrad_generate, sys_efficiency_generate, int(day_generate))}kWh")
+    col2.metric(label="Capacidade gerada pelo sistema", value=f"{calculate.capacity()}kWh")
     col3.metric(label="Quantidade de painéis", value=panel_qty)
     col4.metric(label="Payback aproximado", value=f"{calculate.payback(cost_kwh)} anos")
     style_metric_cards(background_color="#0E1117",border_left_color='#880808', border_color='#880808')
