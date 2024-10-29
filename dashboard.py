@@ -62,7 +62,7 @@ def main() -> None:
     st.sidebar.divider()
     st.sidebar.subheader("Payback")
     #energy_consumption = st.sidebar.number_input("Consumo anual de energia (kWh)", key='consumption', min_value=0, value=3000)
-    cost_install = st.sidebar.number_input("Custo médio de instalação (por kW) (R$)", key='cost_install', min_value=0.0, value=5500.00)
+    cost_install = st.sidebar.number_input("Custo de instalação do sistema (R$)", key='cost_install', min_value=0.0, value=44000.00)
     cost_kwh = st.sidebar.number_input("Custo por kWh (R$)",
                                        key='cost_kwh',
                                        min_value=0.0,
@@ -123,7 +123,6 @@ def main() -> None:
                 map_location.map_generate()
 
     st.divider()
-
 
 if __name__ == "__main__":
     main()
