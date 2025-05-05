@@ -38,4 +38,5 @@ EcoSolar é um aplicativo desenvolvido em Python para calcular a produção esti
 - Kaique Ayala
 - Lucas Santos
 - Luiza Silva
+- Mayra Sacomani
 - Victor Zonta
