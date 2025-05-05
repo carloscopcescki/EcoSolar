@@ -6,3 +6,4 @@ streamlit_folium
 opencage
 solarpy
 pvlib
+python-dotenv

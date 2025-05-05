@@ -8,6 +8,12 @@ from pvlib import irradiance
 import pandas as pd
 import plotly.graph_objects as go
 import math
+import os
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
+key = os.getenv("API_KEY")
 
 class Geolocator:
     '''Class to return geolocalization with cache'''
@@ -20,7 +26,6 @@ class Geolocator:
         if self.location in self._cache:
             return self._cache[self.location]
 
-        key = "4892bb222a594a99a1e75447a3ae333d"
         geocoder = OpenCageGeocode(key)
 
         result = geocoder.geocode(self.location)
