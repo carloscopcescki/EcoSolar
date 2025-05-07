@@ -6,3 +6,4 @@ Maps
 secrets.TOML
 DadosIrradiacao.xlsx
 env
+.env
