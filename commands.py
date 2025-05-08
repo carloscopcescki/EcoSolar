@@ -9,11 +9,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import math
 import os
-from dotenv import load_dotenv
 
-load_dotenv(override=True)
-
-key = os.getenv("API_KEY")
+key = st.secrets['API_KEY']
 
 class Geolocator:
     '''Class to return geolocalization with cache'''
